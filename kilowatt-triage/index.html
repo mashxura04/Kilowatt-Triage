@@ -1,0 +1,459 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kilowatt Triage — Which retrofit comes first?</title>
+<meta name="description" content="Kilowatt Triage is a research project (Team 7345, NYAS Junior Academy) on prioritizing energy-efficiency retrofits in existing public school buildings in Uzbekistan.">
+<meta name="theme-color" content="#0d0d0c">
+<meta property="og:title" content="Kilowatt Triage — Which retrofit comes first?">
+<meta property="og:description" content="A research project on prioritizing energy-efficiency retrofits in existing public schools in Uzbekistan. Team 7345, NYAS Junior Academy.">
+<meta property="og:type" content="website">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+<script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+<a class="skip" href="#question">Skip to content</a>
+
+<header class="nav" id="nav">
+  <a class="nav__brand" href="#top" aria-label="Kilowatt Triage, back to top">Kilowatt Triage<span>/7345</span></a>
+  <nav class="nav__list" id="navList" aria-label="Sections">
+    <a href="#question"><i>01</i>Question</a>
+    <a href="#approach"><i>02</i>Approach</a>
+    <a href="#evidence"><i>03</i>Evidence</a>
+    <a href="#limits"><i>04</i>Limits</a>
+    <a href="#progress"><i>05</i>Progress</a>
+    <a href="#team"><i>06</i>Team</a>
+  </nav>
+  <p class="nav__meta mono" aria-hidden="true"><span id="navSec">00 Intro</span><span id="navPct">0%</span></p>
+  <button class="nav__btn mono" type="button" aria-expanded="false" aria-controls="navList">Menu</button>
+</header>
+
+<!-- the page's scroll thread: a progress indicator, with a small passenger -->
+<div class="thread" id="thread" aria-hidden="true">
+  <span class="thread__line"></span>
+  <svg class="thread__spider" viewBox="0 0 16 16" width="14" height="14">
+    <g stroke="currentColor" stroke-width=".8" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M8 8.6 4 4.5 2 5.5M8 8.6 3 7.5 1 9.5M8 8.6 3.5 10.5 2 13.5M8 8.6 5 12.5 4 15.5"/>
+      <path d="M8 8.6 12 4.5 14 5.5M8 8.6 13 7.5 15 9.5M8 8.6 12.5 10.5 14 13.5M8 8.6 11 12.5 12 15.5"/>
+    </g>
+    <circle cx="8" cy="9" r="2.4" fill="currentColor"/>
+    <circle cx="8" cy="5.8" r="1.4" fill="currentColor"/>
+  </svg>
+</div>
+
+<main>
+
+<!-- ───────── HERO ───────── -->
+<section id="top" class="hero theme-dark" data-sec="00 Intro" aria-labelledby="hero-h">
+  <div class="hero__meta mono">
+    <span>Kilowatt Triage — Team 7345</span>
+    <span>NYAS Junior Academy · Uzbekistan ≈41°N 64°E</span>
+  </div>
+
+  <div class="tagwrap" aria-hidden="false">
+    <div class="tag">
+      <span class="tag__thread"></span>
+      <div class="tag__card">
+        <span class="tag__hole"></span>
+        <p class="mono">Triage tag</p>
+        <p class="tag__big">Zone 3</p>
+        <p class="mono">231.45 kWh/m²/yr<br>Reference school<br>World Bank, 2021</p>
+        <p class="tag__pri mono">Priority&nbsp;<b>?</b></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero__stage">
+    <svg class="hero__art" viewBox="0 0 900 600" role="img" aria-label="Line drawing of a two-storey school with a basement, annotated with four retrofit areas: A insulation, B boiler, C lighting, D fuel switch or heat pump.">
+      <defs>
+        <pattern id="win" x="120" y="190" width="82.5" height="120" patternUnits="userSpaceOnUse">
+          <rect x="19" y="30" width="44.5" height="54" fill="none" stroke="currentColor" stroke-width="1"/>
+          <path d="M41.25 30V84M19 57H63.5" stroke="currentColor" stroke-width=".6"/>
+        </pattern>
+      </defs>
+      <g class="art" fill="none" stroke="currentColor" stroke-width="1.2">
+        <path d="M20 430H880"/>
+        <rect x="120" y="190" width="660" height="240"/>
+        <rect x="120" y="190" width="660" height="240" fill="url(#win)" stroke="none"/>
+        <path d="M120 310H780"/>
+        <path d="M112 190V180H788V190"/>
+        <rect class="art-mask" x="400" y="360" width="100" height="70"/>
+        <path d="M450 360V430M400 395H500" stroke-width=".6"/>
+        <rect x="120" y="430" width="660" height="90" stroke-dasharray="4 5"/>
+        <rect x="140" y="452" width="130" height="58"/>
+        <circle cx="185" cy="481" r="16"/>
+        <path d="M177 481h16M185 473v16" stroke-width=".6"/>
+        <rect x="124" y="140" width="14" height="50"/>
+        <path d="M131 140V452" stroke-dasharray="2 4" stroke-width=".8"/>
+        <rect x="820" y="396" width="46" height="34"/>
+        <circle cx="843" cy="413" r="12"/>
+        <path d="M831 413h24M843 401v24" stroke-width=".6"/>
+        <path d="M820 420H780" stroke-dasharray="2 3" stroke-width=".8"/>
+        <!-- dimension lines -->
+        <path d="M120 560H780M120 552V568M780 552V568" stroke-width=".8"/>
+        <path d="M78 190V430M70 190H86M70 430H86" stroke-width=".8"/>
+        <path d="M78 436V520M70 520H86" stroke-width=".8" stroke-dasharray="3 3"/>
+      </g>
+      <g class="art-heat" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="3 4">
+        <path d="M250 174V142M340 174V132M620 174V138M700 174V146"/>
+        <path d="M131 134V104"/>
+      </g>
+      <g class="art-pts">
+        <circle class="pulse" cx="780" cy="250" r="11"/><circle cx="780" cy="250" r="4.5"/>
+        <circle class="pulse" cx="185" cy="481" r="11"/><circle cx="185" cy="481" r="4.5"/>
+        <circle class="pulse" cx="450" cy="190" r="11"/><circle cx="450" cy="190" r="4.5"/>
+        <circle class="pulse" cx="843" cy="413" r="11"/><circle cx="843" cy="413" r="4.5"/>
+      </g>
+      <g class="art-txt">
+        <text x="796" y="244">A · INSULATION</text>
+        <text x="288" y="485">B · BOILER</text>
+        <text x="462" y="168">C · LIGHTING</text>
+        <text x="866" y="376" text-anchor="end">D · FUEL SWITCH</text>
+        <text x="866" y="389" text-anchor="end">/ HEAT PUMP</text>
+        <text x="450" y="578" text-anchor="middle">REFERENCE SCHOOL · 4,000 m² GROSS INTERNAL FLOOR AREA</text>
+        <text x="64" y="316" text-anchor="middle" transform="rotate(-90 64 316)">2 FLOORS</text>
+        <text x="64" y="478" text-anchor="middle" transform="rotate(-90 64 478)">BASEMENT</text>
+      </g>
+    </svg>
+
+    <h1 id="hero-h" class="hero__title display">
+      <span class="l1">Make the</span>
+      <span class="l2">next <em>move</em></span>
+      <span class="l3">count<b>.</b></span>
+    </h1>
+  </div>
+
+  <div class="hero__foot">
+    <p class="hero__lede">Schools need better energy performance. Budgets are limited. We’re building a transparent way to decide which retrofit comes first, and to show the reasoning.</p>
+    <dl class="hero__data mono">
+      <div><dt>Status</dt><dd><i class="dot"></i>Research + prototype in development</dd></div>
+      <div><dt>Data</dt><dd>World Bank (2021) reference school</dd></div>
+      <div><dt>Scope</dt><dd>Existing public school buildings</dd></div>
+    </dl>
+    <a class="hero__cue mono" href="#question">Scroll <span aria-hidden="true">↓</span></a>
+  </div>
+</section>
+
+<!-- ───────── 01 THE QUESTION ───────── -->
+<section id="question" class="sec theme-light cut-a" data-sec="01 Question" aria-labelledby="q-h">
+  <div class="bigq" aria-hidden="true">?</div>
+  <div class="wrap">
+    <p class="eyebrow mono" data-reveal><span>01</span> The question</p>
+    <h2 id="q-h" class="q-title" data-reveal>The hard part isn’t finding upgrades. It’s deciding which one goes <em>first.</em></h2>
+
+    <div class="q-grid">
+      <p class="q-lede" data-reveal>Not every school can receive every energy-efficiency upgrade at once. Budgets are limited. Climate conditions differ. Existing heating systems differ. And interventions can affect one another. Kilowatt Triage asks which measures should be prioritized, and why.</p>
+
+      <ul class="tensions">
+        <li class="tension" data-reveal>
+          <p class="tension__n mono">T1 · Budget</p>
+          <p class="tension__big"><span data-count="62">62</span>×</p>
+          <p>Between the cheapest and the costliest measure in the report’s Zone 3 model: $815 (LED lighting) against $50,400 (heat pump).</p>
+          <p class="prov prov--calc mono">Our arithmetic · 50,400 ÷ 815</p>
+        </li>
+        <li class="tension" data-reveal style="--d:.08s">
+          <p class="tension__n mono">T2 · Climate</p>
+          <p class="tension__big"><span data-count="1.95" data-dec="2">1.95</span>×</p>
+          <p>Heating energy intensity runs from 118.14 kWh/m²/yr in Zone 1 to 230.05 in Zone 4. The same school, nearly twice the heating demand.</p>
+          <p class="prov prov--calc mono">Our arithmetic · 230.05 ÷ 118.14</p>
+        </li>
+        <li class="tension" data-reveal>
+          <p class="tension__n mono">T3 · Heating system</p>
+          <p class="tension__big"><span data-count="60">60</span>% <span class="slash">/</span> <span data-count="65">65</span>%</p>
+          <p>The reference school’s existing boilers: coal at 60% efficiency, gas at 65%. What is already in the basement changes what an upgrade is worth.</p>
+          <p class="prov prov--pub mono">Published · World Bank 2021</p>
+        </li>
+        <li class="tension" data-reveal style="--d:.08s">
+          <p class="tension__n mono">T4 · Interaction</p>
+          <p class="tension__big">Σ<span class="neq">≠</span></p>
+          <p>Measures don’t simply add up. The report evaluates boiler savings after insulation in the relevant scenario, so the two can’t be stacked as independent standalone figures.</p>
+          <p class="prov prov--pub mono">Published · World Bank 2021</p>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── 02 THE APPROACH ───────── -->
+<section id="approach" class="sec theme-dark cut-b" data-sec="02 Approach" aria-labelledby="a-h">
+  <div class="wrap">
+    <p class="eyebrow mono" data-reveal><span>02</span> The approach</p>
+    <h2 id="a-h" class="display sec-title" data-reveal>Describe.<br>Compare.<br>Evaluate.<br><span class="vm">Prioritize.</span></h2>
+
+    <div class="approach">
+      <div class="stages" id="stages" role="group" aria-label="Four stages of the approach">
+        <button class="stage" type="button" data-i="0" aria-pressed="true"><span class="stage__n mono">01</span><span class="stage__t">Describe</span><span class="stage__s">Understand the building.</span></button>
+        <button class="stage" type="button" data-i="1" aria-pressed="false"><span class="stage__n mono">02</span><span class="stage__t">Compare</span><span class="stage__s">Examine the possible interventions.</span></button>
+        <button class="stage" type="button" data-i="2" aria-pressed="false"><span class="stage__n mono">03</span><span class="stage__t">Evaluate</span><span class="stage__s">Weigh savings, cost, feasibility, compatibility.</span></button>
+        <button class="stage" type="button" data-i="3" aria-pressed="false"><span class="stage__n mono">04</span><span class="stage__t">Prioritize</span><span class="stage__s">Pick promising next steps under a limited budget.</span></button>
+      </div>
+
+      <div class="web" data-inview>
+        <svg id="web" viewBox="0 0 600 600" aria-hidden="true" focusable="false"></svg>
+      </div>
+
+      <div class="stagepanel" id="stagePanel" aria-live="polite">
+        <p class="mono stagepanel__k" id="spK">Stage 01 / 04</p>
+        <h3 id="spT">Describe</h3>
+        <p id="spD">Capture the building, its characteristics, its climate zone and its existing heating system.</p>
+        <ul id="spL" class="stagepanel__l mono"></ul>
+      </div>
+    </div>
+    <p class="note mono" data-reveal>Prototype logic is in development. This is a research approach, not a finished tool.</p>
+  </div>
+</section>
+
+<!-- ───────── 03 THE EVIDENCE ───────── -->
+<section id="evidence" class="sec theme-evidence cut-a" data-sec="03 Evidence" aria-labelledby="e-h">
+  <div class="wrap">
+    <p class="eyebrow mono" data-reveal><span>03</span> The evidence</p>
+    <div class="ev-head">
+      <h2 id="e-h" class="display sec-title" data-reveal>Real numbers.<br><span class="vm">Honest</span> labels.</h2>
+      <div class="ev-src" data-reveal>
+        <p>All figures on this page come from one published source, unless tagged otherwise.</p>
+        <p class="mono"><a href="https://documents.worldbank.org/en/publication/documents-reports/documentdetail/099062325113547753" target="_blank" rel="noopener">World Bank (2021). Uzbekistan: Deploying Energy Efficiency and Distributed Solar in Public Buildings ↗</a></p>
+        <p class="legend mono">
+          <span class="prov prov--pub">Published</span>
+          <span class="prov prov--calc">Our arithmetic</span>
+          <span class="prov prov--assume">Assumption</span>
+          <span class="prov prov--none">Not yet collected</span>
+        </p>
+      </div>
+    </div>
+
+    <!-- reference school -->
+    <div class="ref" data-reveal>
+      <p class="mono ref__k">The reference school <span class="prov prov--pub">Published</span></p>
+      <ul class="ref__list">
+        <li><b class="num"><span data-count="4000">4,000</span><small>m²</small></b><span class="mono">Gross internal floor area</span></li>
+        <li><b class="num">2<small>+1</small></b><span class="mono">Floors above ground, plus one basement</span></li>
+        <li><b class="num"><span data-count="60">60</span><small>%</small></b><span class="mono">Existing coal boiler efficiency</span></li>
+        <li><b class="num"><span data-count="65">65</span><small>%</small></b><span class="mono">Existing gas boiler efficiency</span></li>
+      </ul>
+      <p class="mono ref__n">A model school used in the report. It is not a school we measured, and it does not stand for every school in Uzbekistan.</p>
+    </div>
+
+    <!-- climate zones -->
+    <div class="block" id="zones">
+      <div class="block__head">
+        <h3 class="block__t">Same school, four climates</h3>
+        <p class="mono">Annual energy intensity, kWh/m²/yr · World Bank Table 36 · <span class="prov prov--pub">Published</span></p>
+      </div>
+
+      <div class="zone-tabs" role="group" aria-label="Choose a climate zone">
+        <button type="button" data-zone="1" aria-pressed="false">Zone 1</button>
+        <button type="button" data-zone="2" aria-pressed="false">Zone 2</button>
+        <button type="button" data-zone="3" aria-pressed="true">Zone 3</button>
+        <button type="button" data-zone="4" aria-pressed="false">Zone 4</button>
+      </div>
+
+      <div class="zone-wrap">
+        <div class="zone-chart" data-inview>
+          <ul class="zbars">
+            <li class="zbar" data-zone="1" data-h="118.14" data-l="5.63" data-e="1.75" data-t="125.52"><span class="zbar__name mono">Zone 1</span><span class="zbar__track"><i class="h"></i><i class="l"></i><i class="e"></i></span><span class="zbar__val mono">125.52</span></li>
+            <li class="zbar" data-zone="2" data-h="178.94" data-l="5.63" data-e="1.75" data-t="186.32"><span class="zbar__name mono">Zone 2</span><span class="zbar__track"><i class="h"></i><i class="l"></i><i class="e"></i></span><span class="zbar__val mono">186.32</span></li>
+            <li class="zbar is-on" data-zone="3" data-h="224.07" data-l="5.63" data-e="1.75" data-t="231.45"><span class="zbar__name mono">Zone 3</span><span class="zbar__track"><i class="h"></i><i class="l"></i><i class="e"></i></span><span class="zbar__val mono">231.45</span></li>
+            <li class="zbar" data-zone="4" data-h="230.05" data-l="5.63" data-e="1.75" data-t="237.43"><span class="zbar__name mono">Zone 4</span><span class="zbar__track"><i class="h"></i><i class="l"></i><i class="e"></i></span><span class="zbar__val mono">237.43</span></li>
+          </ul>
+          <div class="zaxis mono" aria-hidden="true"><span></span><span class="zaxis__t"><i>0</i><i>50</i><i>100</i><i>150</i><i>200</i><i>250</i></span><span></span></div>
+          <p class="zkey mono"><span><i class="k k--h"></i>Heating</span><span><i class="k k--l"></i>Lighting</span><span><i class="k k--e"></i>Equipment</span><span>Common scale, 0–250</span></p>
+        </div>
+
+        <div class="zone-detail" aria-live="polite">
+          <p class="mono zd__k"><span id="zdName">Zone 3</span> · per m² per year</p>
+          <dl class="zd">
+            <div><dt>Heating</dt><dd id="zdH">224.07</dd></div>
+            <div><dt>Lighting</dt><dd id="zdL">5.63</dd></div>
+            <div><dt>Equipment</dt><dd id="zdE">1.75</dd></div>
+            <div class="zd__tot"><dt>Total</dt><dd id="zdT">231.45</dd></div>
+          </dl>
+          <p class="zd__abs"><span class="mono">× 4,000 m²</span> <b id="zdAbs">925,800 kWh/yr</b></p>
+          <p class="prov prov--calc mono">Our arithmetic · total intensity × floor area</p>
+          <p class="mono zd__n">Lighting (5.63) and equipment (1.75) are the same in all four zones. Only heating changes.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- interventions -->
+    <div class="block" id="ivBlock">
+      <div class="block__head">
+        <h3 class="block__t">Six measures, Zone 3</h3>
+        <p class="mono">Savings: World Bank Table 42 · Investment: Table 47 · <span class="prov prov--pub">Published</span></p>
+      </div>
+
+      <div class="notadd" data-reveal>
+        <p class="notadd__sym" aria-hidden="true">Σ</p>
+        <p><b>This is not a shopping list.</b> The savings overlap, they are not all the same kind of energy, and they come from a model school. Insulation and boiler savings can’t be added together; the report evaluates boilers after insulation in the relevant scenario. LED lighting saves electricity; insulation and boiler measures mainly affect thermal energy. Electric boilers and heat pumps add electricity demand, so their reported savings are not verified net financial or environmental benefits. Costs are 2021 estimates, not current quotations.</p>
+      </div>
+
+      <div class="sortbar mono" role="group" aria-label="Order the measures">
+        <span>Order by</span>
+        <button type="button" data-sort="order" aria-pressed="true">Report order</button>
+        <button type="button" data-sort="save" aria-pressed="false">Savings ↓</button>
+        <button type="button" data-sort="cost" aria-pressed="false">Cost ↑</button>
+        <span class="sr" id="sortNote" role="status"></span>
+      </div>
+
+      <div class="ivhead mono" aria-hidden="true">
+        <span></span>
+        <span class="ivhead__c"><b>Annual energy-saving potential</b> kWh/yr · scale 0–450,000
+          <span class="ticks"><i>0</i><i>150k</i><i>300k</i><i>450k</i></span></span>
+        <span class="ivhead__c"><b>Estimated investment</b> US$, 2021 · scale 0–$60,000
+          <span class="ticks"><i>0</i><i>$20k</i><i>$40k</i><i>$60k</i></span></span>
+      </div>
+
+      <ol class="ivs" id="ivs" data-inview>
+        <li class="iv" data-order="1" data-save="392482" data-cost="33043">
+          <div class="iv__id"><span class="iv__n mono">M1</span><h4>Insulation</h4><p class="tagline mono tagline--th">Thermal</p><p class="iv__note">Boiler measures are assessed after insulation. Don’t stack the two.</p></div>
+          <div class="iv__c"><span class="iv__lab mono">Savings, kWh/yr</span><span class="bar"><i class="bar__s"></i></span><b class="iv__v mono">392,482</b></div>
+          <div class="iv__c"><span class="iv__lab mono">Investment, US$</span><span class="bar"><i class="bar__c"></i></span><b class="iv__v mono">$33,043</b></div>
+        </li>
+        <li class="iv" data-order="2" data-save="162685" data-cost="13500">
+          <div class="iv__id"><span class="iv__n mono">M2</span><h4>Gas boiler retrofit</h4><p class="tagline mono tagline--th">Thermal</p><p class="iv__note">Listed as “Gas boiler” in the investment table.</p></div>
+          <div class="iv__c"><span class="iv__lab mono">Savings, kWh/yr</span><span class="bar"><i class="bar__s"></i></span><b class="iv__v mono">162,685</b></div>
+          <div class="iv__c"><span class="iv__lab mono">Investment, US$</span><span class="bar"><i class="bar__c"></i></span><b class="iv__v mono">$13,500</b></div>
+        </li>
+        <li class="iv" data-order="3" data-save="188924" data-cost="13500">
+          <div class="iv__id"><span class="iv__n mono">M3</span><h4>Efficient coal boiler</h4><p class="tagline mono tagline--th">Thermal</p><p class="iv__note">Boiler savings are evaluated after insulation in the relevant scenario.</p></div>
+          <div class="iv__c"><span class="iv__lab mono">Savings, kWh/yr</span><span class="bar"><i class="bar__s"></i></span><b class="iv__v mono">188,924</b></div>
+          <div class="iv__c"><span class="iv__lab mono">Investment, US$</span><span class="bar"><i class="bar__c"></i></span><b class="iv__v mono">$13,500</b></div>
+        </li>
+        <li class="iv iv--fuel" data-order="4" data-save="195350" data-cost="10400">
+          <div class="iv__id"><span class="iv__n mono">M4</span><h4>Coal-to-electric boiler</h4><p class="tagline mono tagline--fs">Fuel switch · net effect unverified</p><p class="iv__note">Adds electricity demand. Hatched bar: reported saving, not a verified net benefit. Listed as “Electric boiler” in the investment table.</p></div>
+          <div class="iv__c"><span class="iv__lab mono">Savings, kWh/yr</span><span class="bar"><i class="bar__s"></i></span><b class="iv__v mono">195,350</b></div>
+          <div class="iv__c"><span class="iv__lab mono">Investment, US$</span><span class="bar"><i class="bar__c"></i></span><b class="iv__v mono">$10,400</b></div>
+        </li>
+        <li class="iv iv--fuel" data-order="5" data-save="434627" data-cost="50400">
+          <div class="iv__id"><span class="iv__n mono">M5</span><h4>Coal-to-air-to-water heat pump</h4><p class="tagline mono tagline--fs">Fuel switch · net effect unverified</p><p class="iv__note">Adds electricity demand. Hatched bar: reported saving, not a verified net benefit. Listed as “Heat pump” in the investment table.</p></div>
+          <div class="iv__c"><span class="iv__lab mono">Savings, kWh/yr</span><span class="bar"><i class="bar__s"></i></span><b class="iv__v mono">434,627</b></div>
+          <div class="iv__c"><span class="iv__lab mono">Investment, US$</span><span class="bar"><i class="bar__c"></i></span><b class="iv__v mono">$50,400</b></div>
+        </li>
+        <li class="iv" data-order="6" data-save="14638" data-cost="815">
+          <div class="iv__id"><span class="iv__n mono">M6</span><h4>LED lighting</h4><p class="tagline mono tagline--el">Electricity</p><p class="iv__note">Saves electricity, not thermal energy. Small on this scale, and still real.</p></div>
+          <div class="iv__c"><span class="iv__lab mono">Savings, kWh/yr</span><span class="bar"><i class="bar__s"></i></span><b class="iv__v mono">14,638</b></div>
+          <div class="iv__c"><span class="iv__lab mono">Investment, US$</span><span class="bar"><i class="bar__c"></i></span><b class="iv__v mono">$815</b></div>
+        </li>
+      </ol>
+      <p class="mono ivfoot">Figures describe the World Bank’s reference-school model, not measurements from an actual school in our project. The two bar scales are different on purpose: each runs from zero.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── 04 LIMITS ───────── -->
+<section id="limits" class="sec theme-light cut-b" data-sec="04 Limits" aria-labelledby="l-h">
+  <div class="wrap">
+    <p class="eyebrow mono" data-reveal><span>04</span> The limits</p>
+    <h2 id="l-h" class="display sec-title" data-reveal>What we know.<br><span class="vm">What we don’t.</span></h2>
+    <p class="l-lede" data-reveal>We would rather be precise than impressive. Here is exactly where the evidence stops.</p>
+
+    <div class="kn">
+      <div class="kn__col kn__col--yes" data-reveal>
+        <h3 class="mono">Known <span class="prov prov--pub">Published</span></h3>
+        <ol>
+          <li>The World Bank models a reference public school: 4,000 m², two floors above ground and a basement.</li>
+          <li>For that model school it publishes heating intensity, saving potential and investment estimates (Tables 36, 42, 47).</li>
+          <li>Insulation and boiler measures interact. The report evaluates boilers after insulation in the relevant scenario.</li>
+          <li>LED lighting saves electricity; insulation and boilers mainly affect thermal energy.</li>
+        </ol>
+      </div>
+      <div class="kn__col kn__col--no" data-reveal style="--d:.08s">
+        <h3 class="mono">Not yet <span class="prov prov--none">Not yet collected</span></h3>
+        <ol>
+          <li>School-specific energy bills and operational data. We have not collected any.</li>
+          <li>On-site validation and local feedback. Both remain important next steps.</li>
+          <li>Net effects of fuel switching. Electric boilers and heat pumps add electricity demand, so net energy, cost and environmental benefits need further analysis.</li>
+          <li>A carbon figure. We don’t have a verified Uzbekistan grid-emissions factor for this analysis, so we publish no emissions reduction.</li>
+          <li>Current prices. The costs are from the 2021 report, not market quotations.</li>
+          <li>Coverage. One reference school does not represent every school in Uzbekistan.</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="prov-key" data-reveal>
+      <h3 class="mono">How to read the labels on this page</h3>
+      <dl>
+        <div><dt><span class="prov prov--pub">Published</span></dt><dd>A figure taken directly from the World Bank report.</dd></div>
+        <div><dt><span class="prov prov--calc">Our arithmetic</span></dt><dd>A simple calculation we made from published figures, such as a ratio or a total.</dd></div>
+        <div><dt><span class="prov prov--assume">Assumption</span></dt><dd>A choice made to keep the work going, such as using the reference school as a starting point. It is not a finding.</dd></div>
+        <div><dt><span class="prov prov--none">Not yet collected</span></dt><dd>Information we don’t have yet and are not pretending to.</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── 05 PROGRESS ───────── -->
+<section id="progress" class="sec theme-dark cut-a" data-sec="05 Progress" aria-labelledby="p-h">
+  <div class="wrap">
+    <p class="eyebrow mono" data-reveal><span>05</span> Progress</p>
+    <h2 id="p-h" class="display sec-title" data-reveal>Still <span class="vm">in motion.</span></h2>
+    <p class="p-sum mono" data-reveal id="pSum">2 complete · 1 in progress · 2 planned</p>
+
+    <ol class="steps">
+      <li class="step is-done" data-reveal>
+        <span class="step__n">01</span>
+        <span class="step__m" aria-hidden="true"></span>
+        <div class="step__b"><p class="step__st mono">Complete</p><h3>Research base assembled</h3><p>Published reference data on school energy use, savings potential and costs gathered and read closely.</p></div>
+      </li>
+      <li class="step is-done" data-reveal>
+        <span class="step__n">02</span>
+        <span class="step__m" aria-hidden="true"></span>
+        <div class="step__b"><p class="step__st mono">Complete</p><h3>Reference scenarios examined</h3><p>The Zone 1–4 energy profiles and the six Zone 3 measures, with their interactions and caveats.</p></div>
+      </li>
+      <li class="step is-now" data-reveal>
+        <span class="step__n">03</span>
+        <span class="step__m" aria-hidden="true"></span>
+        <div class="step__b"><p class="step__st mono">In progress</p><h3>Evaluation logic being developed</h3><p>How savings, cost, feasibility and compatibility should be weighed to produce a prioritization we can explain.</p></div>
+      </li>
+      <li class="step is-next" data-reveal>
+        <span class="step__n">04</span>
+        <span class="step__m" aria-hidden="true"></span>
+        <div class="step__b"><p class="step__st mono">Planned</p><h3>Local school data and feedback to be collected</h3><p>School-specific information and local input. None of it has been collected yet.</p></div>
+      </li>
+      <li class="step is-next" data-reveal>
+        <span class="step__n">05</span>
+        <span class="step__m" aria-hidden="true"></span>
+        <div class="step__b"><p class="step__st mono">Planned</p><h3>Model refinement and validation</h3><p>Testing and improving the approach against real conditions.</p></div>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ───────── 06 TEAM ───────── -->
+<section id="team" class="sec theme-light cut-b" data-sec="06 Team" aria-labelledby="t-h">
+  <div class="wrap">
+    <p class="eyebrow mono" data-reveal><span>06</span> The team</p>
+    <h2 id="t-h" class="sr">Team Kilowatt Triage, number 7345</h2>
+    <div class="team__no" aria-hidden="true">7345</div>
+    <ul class="team__names">
+      <li data-reveal><span class="mono">Member</span><b>Mashhura Kenjayeva</b></li>
+      <li data-reveal style="--d:.06s"><span class="mono">Member</span><b>Yafa Sulayeh</b></li>
+      <li data-reveal style="--d:.12s"><span class="mono">Member</span><b>Seedra Alghafari</b></li>
+    </ul>
+    <p class="team__foot mono" data-reveal>Team Kilowatt Triage · Team No. 7345 · NYAS Junior Academy</p>
+  </div>
+</section>
+
+</main>
+
+<!-- ───────── FOOTER ───────── -->
+<footer class="foot theme-dark cut-a">
+  <svg class="foot__web" id="cornerWeb" viewBox="0 0 200 200" aria-hidden="true" focusable="false"></svg>
+  <div class="wrap">
+    <p class="foot__mark display" aria-hidden="true">Kilowatt<br>Triage</p>
+    <div class="foot__row mono">
+      <p>Kilowatt Triage<br>NYAS Junior Academy project<br>Team 7345</p>
+      <p><a href="https://joinlaunchpad.com/#/projects/7345/kilowatt-triage" target="_blank" rel="noopener">Official project page ↗</a><br><a href="https://documents.worldbank.org/en/publication/documents-reports/documentdetail/099062325113547753" target="_blank" rel="noopener">World Bank (2021) report ↗</a></p>
+      <p>Research in development.<br>Not a launched product.</p>
+      <a class="foot__top" href="#top">Back to top <span aria-hidden="true">↑</span></a>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js" defer></script>
+</body>
+</html>
