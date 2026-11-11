@@ -1,0 +1,25 @@
+climate_zone,intervention,reported_energy_saving_kwh,reported_saving_basis,fuel_saved_tonnes,fuel_saved_m3,additional_electricity_kwh,investment_cost_usd,applicability,source_year
+1,Insulation,217287,thermal,,,,26136,Any heating system,2021
+1,Gas boiler retrofit,82432,thermal,,,,10000,Gas-fired boiler,2021
+1,Efficient coal boiler,95727,thermal,,,,10000,Coal-fired boiler,2021
+1,Coal-to-electric boiler,98983,fuel_switch_unresolved,,,,9000,Coal-fired boiler conversion,2021
+1,Coal-to-air-to-water heat pump,220224,fuel_switch_unresolved,,,,46000,Coal-fired boiler conversion,2021
+1,LED lighting,14638,electrical,,,,815,Any school,2021
+2,Insulation,308061,thermal,,,,33043,Any heating system,2021
+2,Gas boiler retrofit,131653,thermal,,,,13500,Gas-fired boiler,2021
+2,Efficient coal boiler,152887,thermal,,,,13500,Coal-fired boiler,2021
+2,Coal-to-electric boiler,158088,fuel_switch_unresolved,,,,10000,Coal-fired boiler conversion,2021
+2,Coal-to-air-to-water heat pump,351722,fuel_switch_unresolved,,,,48200,Coal-fired boiler conversion,2021
+2,LED lighting,14638,electrical,,,,815,Any school,2021
+3,Insulation,392482,thermal,,,,33043,Any heating system,2021
+3,Gas boiler retrofit,162685,thermal,,,,13500,Gas-fired boiler,2021
+3,Efficient coal boiler,188924,thermal,,,,13500,Coal-fired boiler,2021
+3,Coal-to-electric boiler,195350,fuel_switch_unresolved,,,,10400,Coal-fired boiler conversion,2021
+3,Coal-to-air-to-water heat pump,434627,fuel_switch_unresolved,,,,50400,Coal-fired boiler conversion,2021
+3,LED lighting,14638,electrical,,,,815,Any school,2021
+4,Insulation,391089,thermal,,,,37049,Any heating system,2021
+4,Gas boiler retrofit,170859,thermal,,,,18000,Gas-fired boiler,2021
+4,Efficient coal boiler,198417,thermal,,,,18000,Coal-fired boiler,2021
+4,Coal-to-electric boiler,205166,fuel_switch_unresolved,,,,12000,Coal-fired boiler conversion,2021
+4,Coal-to-air-to-water heat pump,456465,fuel_switch_unresolved,,,,54000,Coal-fired boiler conversion,2021
+4,LED lighting,14638,electrical,,,,815,Any school,2021
