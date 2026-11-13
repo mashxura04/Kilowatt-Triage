@@ -170,6 +170,14 @@ def display_evaluation_report(profile, evaluation):
             print("School-specific net energy saving: NOT CALCULATED")
             print(f"Reason: {item['estimate_limitation']}")
 
+        elif item["estimate_status"] == "not_applicable":
+            print(
+                "World Bank reference-school figure: "
+                f"{item['reported_energy_saving_kwh']:,.0f} kWh"
+            )
+            print("Estimated savings for this school: NOT APPLICABLE")
+            print(f"Reason: {item['estimate_limitation']}")
+
         else:
             print(
                 "World Bank reported savings: "
