@@ -1,14 +1,28 @@
 /* Kilowatt Triage: assessment results. Uses the design tokens from styles.css. */
 
+/* ---------- spacing between result sections ---------- */
+.assessment-results { margin-top: 48px; }
+.assessment-result-block { margin-top: 56px; }
+.assessment-result-block > h3 { margin-bottom: 14px; }
+.assessment-result-block .assessment-help { margin-top: 20px; color: var(--mute, #888); font-size: .88rem; max-width: 70ch; }
+.assessment-disclaimer { margin-top: 56px; color: var(--mute, #888); }
+
+#assessmentLimitations { list-style: disc; padding-left: 1.2em; max-width: 70ch; font-size: .95rem; }
+#assessmentLimitations li { margin-block: 6px; }
+
+/* ---------- profile summary ---------- */
 .kt-summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 0; border: 1px solid var(--line, rgba(128,128,128,.3)); margin-block: 24px 8px; }
 .kt-summary > div { padding: 12px 16px; border-right: 1px solid var(--line, rgba(128,128,128,.3)); border-bottom: 1px solid var(--line, rgba(128,128,128,.3)); margin: 0 -1px -1px 0; }
 .kt-summary dt { font-family: var(--f-mono); font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; color: var(--mute, #888); }
 .kt-summary dd { margin: 4px 0 0; font-weight: 600; }
 
-.kt-scroll { overflow-x: auto; margin-block: 12px; }
-.kt-table { width: 100%; min-width: 680px; border-collapse: collapse; font-size: .92rem; }
+/* ---------- tables (scroll sideways on small screens) ---------- */
+.kt-scroll { overflow-x: auto; margin-block: 12px; -webkit-overflow-scrolling: touch; }
+.kt-table { width: 100%; min-width: 900px; border-collapse: collapse; font-size: .92rem; }
 .kt-table th { font-family: var(--f-mono); font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; font-weight: 400; color: var(--mute, #888); text-align: left; padding: 8px 12px; border-bottom: 1px solid var(--line, rgba(128,128,128,.3)); }
-.kt-table td { padding: 12px; vertical-align: top; border-bottom: 1px solid var(--line, rgba(128,128,128,.3)); }
+.kt-table td { padding: 12px; vertical-align: top; border-bottom: 1px solid var(--line, rgba(128,128,128,.3)); min-width: 110px; }
+.kt-table td:first-child { min-width: 150px; }
+.kt-table td:nth-child(6) { min-width: 300px; }
 .kt-num { white-space: nowrap; }
 .kt-sub, .kt-muted { color: var(--mute, #888); font-size: .82rem; }
 .kt-name { font-weight: 700; }
@@ -17,12 +31,14 @@
 .kt-tag--no { opacity: .75; }
 .kt-tag--review { background: var(--acid, #d8ff3e); color: var(--ink, #0d0d0c); border-color: var(--acid, #d8ff3e); }
 
+/* ---------- package boxes ---------- */
 .kt-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 16px; margin-block: 16px; }
 .kt-stat { border: 1px solid var(--line, rgba(128,128,128,.3)); padding: 14px 16px; }
 .kt-stat .kt-label { font-family: var(--f-mono); font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; color: var(--mute, #888); }
 .kt-stat .kt-value { font-size: 1.5rem; font-weight: 800; margin-top: 4px; }
 .kt-stat .kt-unit { font-size: .8rem; font-weight: 400; color: var(--mute, #888); }
 
+/* ---------- budget scenario cards ---------- */
 .kt-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-block: 16px; }
 .kt-card { border: 1px solid var(--line, rgba(128,128,128,.3)); padding: 16px; }
 .kt-card h4 { font-family: var(--f-mono); font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 10px; }
@@ -30,7 +46,8 @@
 .kt-card li { padding: 6px 0; border-top: 1px solid var(--line, rgba(128,128,128,.3)); }
 .kt-row { display: flex; justify-content: space-between; gap: 12px; padding: 4px 0; }
 
+/* ---------- notes and lists ---------- */
 .kt-note { margin-block: 12px; color: var(--mute, #888); font-size: .88rem; max-width: 70ch; }
-.kt-h { font-family: var(--f-mono); font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; margin: 22px 0 6px; }
-.kt-list { list-style: disc; padding-left: 1.2em; max-width: 70ch; }
+.kt-h { font-family: var(--f-mono); font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; margin: 28px 0 8px; }
+.kt-list { list-style: disc; padding-left: 1.2em; max-width: 70ch; font-size: .92rem; }
 .kt-list li { margin-block: 4px; }
