@@ -1,4 +1,3 @@
-
 import math
 
 
@@ -119,6 +118,24 @@ def scale_interventions(
             scaled_intervention["scaling_assumption"] = (
                 "The World Bank reported figure is preserved, but it is "
                 "not scaled or presented as a school-specific net saving."
+            )
+
+        elif intervention.get("compatibility") == "incompatible":
+            # The measure does not fit this school's heating system, so
+            # no school-specific saving is estimated. The reported figure
+            # remains visible but describes the reference school only.
+            scaled_intervention["estimated_energy_saving_kwh"] = None
+
+            scaled_intervention["estimate_status"] = "not_applicable"
+
+            scaled_intervention["estimate_limitation"] = (
+                "No saving is estimated because this intervention is "
+                "incompatible with the school's recorded heating system."
+            )
+
+            scaled_intervention["scaling_assumption"] = (
+                "Not scaled. The World Bank reported figure describes "
+                "the reference school and does not apply to this school."
             )
 
         else:
