@@ -1,4 +1,3 @@
-
 /* Kilowatt Triage — interactions + school assessment. No dependencies. */
 (() => {
   'use strict';
@@ -544,82 +543,375 @@
       return Number.isFinite(parsed) ? parsed : null;
     };
 
-    function appendResult(parent, label, value) {
-      const row = document.createElement('div');
-      row.className = 'assessment-result-row';
+    /* ----- results rendering: readable layout instead of a raw dump ----- */
 
-      const heading = document.createElement('span');
-      heading.className = 'mono';
-      heading.textContent = label.replace(/_/g, ' ');
-
-      const content = document.createElement('div');
-      content.className = 'assessment-result-value';
-
-      if (value === null || value === undefined) {
-        content.textContent = 'Not available';
-      } else if (Array.isArray(value)) {
-        if (value.length === 0) {
-          content.textContent = 'None';
-        } else {
-          value.forEach((item, index) => {
-            appendResult(content, `Item ${index + 1}`, item);
-          });
-        }
-      } else if (typeof value === 'object') {
-        Object.entries(value).forEach(([key, childValue]) => {
-          appendResult(content, key, childValue);
-        });
-      } else if (typeof value === 'number') {
-        content.textContent = fmt(value, Number.isInteger(value) ? 0 : 2);
-      } else if (typeof value === 'boolean') {
-        content.textContent = value ? 'Yes' : 'No';
-      } else {
-        content.textContent = String(value);
+    const LABELS = {
+      heating: {
+        coal: 'Coal',
+        gas: 'Gas',
+        district: 'District heating',
+        electric: 'Electric',
+        other: 'Other',
+        unknown: 'Unknown'
+      },
+      condition: {
+        good: 'Good',
+        fair: 'Fair',
+        poor: 'Poor',
+        unknown: 'Unknown'
+      },
+      fuel: {
+        coal: 'Coal',
+        natural_gas: 'Natural gas',
+        electricity: 'Electricity',
+        other: 'Other'
+      },
+      basis: {
+        thermal: 'Thermal (heat)',
+        electrical: 'Electrical',
+        fuel_switch_unresolved: 'Fuel switch (net effect unverified)'
+      },
+      compat: {
+        compatible: ['Compatible', 'ok'],
+        incompatible: ['Incompatible', 'no'],
+        needs_review: ['Needs review', 'review']
       }
+    };
 
-      row.append(heading, content);
-      parent.appendChild(row);
+    const label = (map, key) =>
+      (key !== null && key !== undefined && map[key]) || String(key ?? 'Unknown');
+
+    const make = (tag, cls, text) => {
+      const node = document.createElement(tag);
+      if (cls) node.className = cls;
+      if (text !== undefined && text !== null) node.textContent = text;
+      return node;
+    };
+
+    const kwh = (n) => (Number.isFinite(n) ? `${fmt(n)} kWh` : 'Not available');
+    const usd = (n) => (Number.isFinite(n) ? `$${fmt(n)}` : 'Not available');
+
+    function buildTable(caption, headers) {
+      const wrap = make('div', 'kt-scroll');
+      const table = make('table', 'kt-table');
+      table.appendChild(make('caption', 'sr', caption));
+
+      const headRow = make('tr');
+      headers.forEach((h) => headRow.appendChild(make('th', null, h)));
+      table.appendChild(make('thead')).appendChild(headRow);
+
+      const body = make('tbody');
+      table.appendChild(body);
+      wrap.appendChild(table);
+
+      return { wrap, body };
     }
 
-    function renderResult(target, data) {
-      if (!target) return;
+    function addRow(body, cells) {
+      const row = make('tr');
 
+      cells.forEach((cell) => {
+        const td = make('td');
+
+        if (cell instanceof Node) td.appendChild(cell);
+        else td.textContent = cell;
+
+        row.appendChild(td);
+      });
+
+      body.appendChild(row);
+    }
+
+    function renderSummary(target, profile, budget) {
+      if (!target) return;
       target.textContent = '';
 
-      if (data === null || data === undefined) {
-        target.textContent = 'No results available.';
+      const fuels = profile.available_fuels.length
+        ? profile.available_fuels.map((f) => label(LABELS.fuel, f)).join(', ')
+        : 'None listed';
+
+      const items = [
+        ['Climate zone', `Zone ${profile.climate_zone}`],
+        ['Floor area', `${fmt(profile.floor_area_m2)} m²`],
+        ['Heating system', label(LABELS.heating, profile.heating_system)],
+        ['Heating condition', label(LABELS.condition, profile.heating_condition)],
+        ['Available fuels', fuels],
+        [
+          'Electrical capacity',
+          profile.electrical_capacity_kw === null
+            ? 'Not provided'
+            : `${fmt(profile.electrical_capacity_kw, 2)} kW`
+        ],
+        ['Budget (2021 USD)', usd(budget)]
+      ];
+
+      const dl = make('dl', 'kt-summary');
+
+      items.forEach(([term, value]) => {
+        const box = make('div');
+        box.append(make('dt', null, term), make('dd', null, value));
+        dl.appendChild(box);
+      });
+
+      target.appendChild(dl);
+    }
+
+    function renderMeasures(target, items) {
+      if (!target) return;
+      target.textContent = '';
+
+      if (!Array.isArray(items) || items.length === 0) {
+        target.textContent = 'No interventions were returned.';
         return;
       }
 
-      if (Array.isArray(data)) {
-        if (data.length === 0) {
-          target.textContent = 'None reported.';
-          return;
+      const { wrap, body } = buildTable(
+        'Retrofit interventions evaluated for this school',
+        [
+          'Measure',
+          'Status',
+          'Energy type',
+          'Estimated saving (kWh/yr)',
+          'Reference cost (2021 USD)',
+          'Notes'
+        ]
+      );
+
+      items.forEach((item) => {
+        const [statusText, statusKind] =
+          LABELS.compat[item.compatibility] || [String(item.compatibility), 'no'];
+
+        const status = make('span', `kt-tag kt-tag--${statusKind}`, statusText);
+
+        const saving = make('div', 'kt-num');
+
+        if (
+          item.estimate_status === 'estimated' &&
+          Number.isFinite(item.estimated_energy_saving_kwh)
+        ) {
+          saving.appendChild(
+            make('strong', null, fmt(item.estimated_energy_saving_kwh))
+          );
+        } else if (item.estimate_status === 'not_applicable') {
+          saving.appendChild(make('span', 'kt-muted', 'Not applicable'));
+        } else {
+          saving.appendChild(make('span', 'kt-muted', 'Not calculated'));
         }
 
-        data.forEach((item, index) => {
-          appendResult(target, `Item ${index + 1}`, item);
-        });
-
-        return;
-      }
-
-      if (typeof data === 'object') {
-        const entries = Object.entries(data);
-
-        if (entries.length === 0) {
-          target.textContent = 'No results available.';
-          return;
+        if (Number.isFinite(item.reported_energy_saving_kwh)) {
+          saving.appendChild(
+            make(
+              'div',
+              'kt-sub',
+              `Reference school: ${fmt(item.reported_energy_saving_kwh)} kWh`
+            )
+          );
         }
 
-        entries.forEach(([key, value]) => {
-          appendResult(target, key, value);
-        });
+        const notes = make('div');
+        if (item.compatibility_reason) {
+          notes.appendChild(make('div', null, item.compatibility_reason));
+        }
+        if (item.estimate_limitation) {
+          notes.appendChild(make('div', 'kt-sub', item.estimate_limitation));
+        }
 
+        addRow(body, [
+          make('span', 'kt-name', item.intervention),
+          status,
+          label(LABELS.basis, item.reported_saving_basis),
+          saving,
+          usd(item.investment_cost_usd),
+          notes
+        ]);
+      });
+
+      target.appendChild(wrap);
+
+      target.appendChild(
+        make(
+          'p',
+          'kt-note',
+          'Estimated savings scale proportionally with floor area and are not measured results. ' +
+          'Reference costs are published 2021 figures for the World Bank model school and are not adjusted for this school.'
+        )
+      );
+    }
+
+    function stat(labelText, valueText, unit) {
+      const box = make('div', 'kt-stat');
+      box.appendChild(make('div', 'kt-label', labelText));
+
+      const value = make('div', 'kt-value', valueText);
+      if (unit) value.appendChild(make('span', 'kt-unit', ` ${unit}`));
+
+      box.appendChild(value);
+      return box;
+    }
+
+    function renderPackage(target, pkg) {
+      if (!target) return;
+      target.textContent = '';
+
+      if (!pkg) {
+        target.textContent = 'No package results available.';
         return;
       }
 
-      target.textContent = String(data);
+      const stats = make('div', 'kt-stats');
+      stats.append(
+        stat('Baseline heating demand', fmt(pkg.baseline_heating_kwh), 'kWh/yr'),
+        stat('After insulation', fmt(pkg.heating_after_insulation_kwh), 'kWh/yr'),
+        stat('After package', fmt(pkg.heating_after_package_kwh), 'kWh/yr'),
+        stat('Thermal savings', fmt(pkg.thermal_savings_kwh), 'kWh/yr'),
+        stat('Electrical savings (LED)', fmt(pkg.electrical_savings_kwh), 'kWh/yr'),
+        stat('Total reference cost', usd(pkg.total_investment_cost_usd_2021), '2021 USD')
+      );
+      target.appendChild(stats);
+
+      target.appendChild(
+        make(
+          'p',
+          'kt-note',
+          'Thermal (heat) and electrical savings are different kinds of energy and are reported separately. They are not added together.'
+        )
+      );
+
+      target.appendChild(make('h4', 'kt-h', 'Measures in this package'));
+
+      const { wrap, body } = buildTable(
+        'Measures selected for the package',
+        ['Measure', 'Energy type', 'Estimated saving (kWh/yr)', 'Reference cost (2021 USD)']
+      );
+
+      (pkg.selected_measures || []).forEach((m) => {
+        addRow(body, [
+          make('span', 'kt-name', m.intervention),
+          m.energy_carrier === 'thermal' ? 'Thermal (heat)' : 'Electrical',
+          fmt(m.estimated_saving_kwh),
+          usd(m.investment_cost_usd_2021)
+        ]);
+      });
+
+      target.appendChild(wrap);
+
+      if (pkg.investment_cost_basis) {
+        target.appendChild(make('p', 'kt-note', pkg.investment_cost_basis));
+      }
+
+      if (Array.isArray(pkg.excluded_options) && pkg.excluded_options.length) {
+        target.appendChild(make('h4', 'kt-h', 'Options not included'));
+
+        const ul = make('ul', 'kt-list');
+
+        pkg.excluded_options.forEach((o) => {
+          ul.appendChild(make('li', null, `${o.intervention}: ${o.reason}`));
+        });
+
+        target.appendChild(ul);
+      }
+
+      if (pkg.boiler_assumption) {
+        target.appendChild(make('p', 'kt-note', pkg.boiler_assumption));
+      }
+    }
+
+    function scenarioCard(title, scenario) {
+      const card = make('div', 'kt-card');
+      card.appendChild(make('h4', null, title));
+
+      const rows = [
+        ['Budget', usd(scenario.budget_usd_2021)],
+        ['Estimated savings', kwh(scenario.estimated_savings_kwh)],
+        ['Reference cost of selection', usd(scenario.investment_cost_usd_2021)],
+        ['Budget remaining', usd(scenario.remaining_budget_usd_2021)]
+      ];
+
+      rows.forEach(([term, value]) => {
+        const row = make('div', 'kt-row');
+        row.append(make('span', 'kt-muted', term), make('strong', null, value));
+        card.appendChild(row);
+      });
+
+      const measures = scenario.selected_measures || [];
+
+      if (measures.length === 0) {
+        card.appendChild(
+          make('p', 'kt-note', 'No measure fits within this budget.')
+        );
+      } else {
+        const ul = make('ul');
+
+        measures.forEach((m) => {
+          const li = make('li');
+          li.appendChild(make('strong', null, m.intervention));
+          li.appendChild(
+            make(
+              'div',
+              'kt-sub',
+              `${kwh(m.estimated_saving_kwh)} saved · ${usd(m.investment_cost_usd_2021)}`
+            )
+          );
+          ul.appendChild(li);
+        });
+
+        card.appendChild(ul);
+      }
+
+      return card;
+    }
+
+    function renderBudget(target, budgetResult) {
+      if (!target) return;
+      target.textContent = '';
+
+      if (!budgetResult) {
+        target.textContent = 'No budget results available.';
+        return;
+      }
+
+      const cards = make('div', 'kt-cards');
+
+      if (budgetResult.thermal_optimization) {
+        cards.appendChild(
+          scenarioCard('Heating scenario (thermal)', budgetResult.thermal_optimization)
+        );
+      }
+
+      if (budgetResult.electrical_optimization) {
+        cards.appendChild(
+          scenarioCard('Electricity scenario (LED)', budgetResult.electrical_optimization)
+        );
+      }
+
+      target.appendChild(cards);
+
+      if (budgetResult.cost_basis) {
+        target.appendChild(make('p', 'kt-note', budgetResult.cost_basis));
+      }
+
+      if (Array.isArray(budgetResult.limitations) && budgetResult.limitations.length) {
+        target.appendChild(make('h4', 'kt-h', 'What the optimizer does not do'));
+
+        const ul = make('ul', 'kt-list');
+
+        budgetResult.limitations.forEach((text) => {
+          ul.appendChild(make('li', null, text));
+        });
+
+        target.appendChild(ul);
+      }
+    }
+
+    function renderLimitations(target, items) {
+      if (!target) return;
+      target.textContent = '';
+
+      const list = Array.isArray(items) && items.length
+        ? items
+        : ['No limitations were returned by the API.'];
+
+      list.forEach((text) => target.appendChild(make('li', null, text)));
     }
 
     assessmentForm.addEventListener('submit', async (event) => {
@@ -688,24 +980,11 @@
           );
         }
 
-        renderResult($('#assessmentSummary'), {
-          climate_zone: profile.climate_zone,
-          floor_area_m2: profile.floor_area_m2,
-          heating_system: profile.heating_system,
-          heating_condition: profile.heating_condition,
-          budget_usd_2021: budget
-        });
-
-        renderResult($('#interventionResults'), data.evaluation);
-        renderResult($('#packageResults'), data.package);
-        renderResult($('#budgetResults'), data.budget_optimization);
-
-        const limitations = data.package?.limitations;
-
-        renderResult(
-          $('#assessmentLimitations'),
-          limitations || ['No limitations were returned by the API.']
-        );
+        renderSummary($('#assessmentSummary'), profile, budget);
+        renderMeasures($('#interventionResults'), data.evaluation?.interventions);
+        renderPackage($('#packageResults'), data.package);
+        renderBudget($('#budgetResults'), data.budget_optimization);
+        renderLimitations($('#assessmentLimitations'), data.package?.limitations);
 
         if (assessmentResults) {
           assessmentResults.hidden = false;
