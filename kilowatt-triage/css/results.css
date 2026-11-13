@@ -1,0 +1,36 @@
+/* Kilowatt Triage: assessment results. Uses the design tokens from styles.css. */
+
+.kt-summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 0; border: 1px solid var(--line, rgba(128,128,128,.3)); margin-block: 24px 8px; }
+.kt-summary > div { padding: 12px 16px; border-right: 1px solid var(--line, rgba(128,128,128,.3)); border-bottom: 1px solid var(--line, rgba(128,128,128,.3)); margin: 0 -1px -1px 0; }
+.kt-summary dt { font-family: var(--f-mono); font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; color: var(--mute, #888); }
+.kt-summary dd { margin: 4px 0 0; font-weight: 600; }
+
+.kt-scroll { overflow-x: auto; margin-block: 12px; }
+.kt-table { width: 100%; min-width: 680px; border-collapse: collapse; font-size: .92rem; }
+.kt-table th { font-family: var(--f-mono); font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; font-weight: 400; color: var(--mute, #888); text-align: left; padding: 8px 12px; border-bottom: 1px solid var(--line, rgba(128,128,128,.3)); }
+.kt-table td { padding: 12px; vertical-align: top; border-bottom: 1px solid var(--line, rgba(128,128,128,.3)); }
+.kt-num { white-space: nowrap; }
+.kt-sub, .kt-muted { color: var(--mute, #888); font-size: .82rem; }
+.kt-name { font-weight: 700; }
+
+.kt-tag { display: inline-block; font-family: var(--f-mono); font-size: .68rem; letter-spacing: .06em; text-transform: uppercase; padding: 3px 8px; border: 1px solid currentColor; white-space: nowrap; }
+.kt-tag--no { opacity: .75; }
+.kt-tag--review { background: var(--acid, #d8ff3e); color: var(--ink, #0d0d0c); border-color: var(--acid, #d8ff3e); }
+
+.kt-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 16px; margin-block: 16px; }
+.kt-stat { border: 1px solid var(--line, rgba(128,128,128,.3)); padding: 14px 16px; }
+.kt-stat .kt-label { font-family: var(--f-mono); font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; color: var(--mute, #888); }
+.kt-stat .kt-value { font-size: 1.5rem; font-weight: 800; margin-top: 4px; }
+.kt-stat .kt-unit { font-size: .8rem; font-weight: 400; color: var(--mute, #888); }
+
+.kt-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-block: 16px; }
+.kt-card { border: 1px solid var(--line, rgba(128,128,128,.3)); padding: 16px; }
+.kt-card h4 { font-family: var(--f-mono); font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 10px; }
+.kt-card ul { margin: 10px 0; }
+.kt-card li { padding: 6px 0; border-top: 1px solid var(--line, rgba(128,128,128,.3)); }
+.kt-row { display: flex; justify-content: space-between; gap: 12px; padding: 4px 0; }
+
+.kt-note { margin-block: 12px; color: var(--mute, #888); font-size: .88rem; max-width: 70ch; }
+.kt-h { font-family: var(--f-mono); font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; margin: 22px 0 6px; }
+.kt-list { list-style: disc; padding-left: 1.2em; max-width: 70ch; }
+.kt-list li { margin-block: 4px; }
