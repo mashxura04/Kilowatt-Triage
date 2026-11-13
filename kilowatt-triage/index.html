@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -27,6 +28,7 @@
     <a href="#evidence"><i>03</i>Evidence</a>
     <a href="#limits"><i>04</i>Limits</a>
     <a href="#progress"><i>05</i>Progress</a>
+    <a href="#assessment"><i>↗</i>Try it</a>
     <a href="#team"><i>06</i>Team</a>
   </nav>
   <p class="nav__meta mono" aria-hidden="true"><span id="navSec">00 Intro</span><span id="navPct">0%</span></p>
@@ -94,7 +96,6 @@
         <circle cx="843" cy="413" r="12"/>
         <path d="M831 413h24M843 401v24" stroke-width=".6"/>
         <path d="M820 420H780" stroke-dasharray="2 3" stroke-width=".8"/>
-        <!-- dimension lines -->
         <path d="M120 560H780M120 552V568M780 552V568" stroke-width=".8"/>
         <path d="M78 190V430M70 190H86M70 430H86" stroke-width=".8"/>
         <path d="M78 436V520M70 520H86" stroke-width=".8" stroke-dasharray="3 3"/>
@@ -226,7 +227,6 @@
       </div>
     </div>
 
-    <!-- reference school -->
     <div class="ref" data-reveal>
       <p class="mono ref__k">The reference school <span class="prov prov--pub">Published</span></p>
       <ul class="ref__list">
@@ -238,7 +238,6 @@
       <p class="mono ref__n">A model school used in the report. It is not a school we measured, and it does not stand for every school in Uzbekistan.</p>
     </div>
 
-    <!-- climate zones -->
     <div class="block" id="zones">
       <div class="block__head">
         <h3 class="block__t">Same school, four climates</h3>
@@ -279,7 +278,6 @@
       </div>
     </div>
 
-    <!-- interventions -->
     <div class="block" id="ivBlock">
       <div class="block__head">
         <h3 class="block__t">Six measures, Zone 3</h3>
@@ -420,6 +418,141 @@
         <div class="step__b"><p class="step__st mono">Planned</p><h3>Model refinement and validation</h3><p>Testing and improving the approach against real conditions.</p></div>
       </li>
     </ol>
+  </div>
+</section>
+
+<!-- ───────── TRY IT: SCHOOL ASSESSMENT ───────── -->
+<section id="assessment" class="sec theme-evidence cut-b" data-sec="Try it" aria-labelledby="assessment-h">
+  <div class="wrap">
+    <p class="eyebrow mono" data-reveal><span>↗</span> Interactive prototype</p>
+    <h2 id="assessment-h" class="display sec-title" data-reveal>Give us a school.<br><span class="vm">We’ll run the numbers.</span></h2>
+    <p class="l-lede" data-reveal>
+      Enter a few details about a school to explore compatible retrofit options,
+      estimated savings and budget scenarios.
+    </p>
+
+    <div class="notadd" data-reveal>
+      <p class="notadd__sym" aria-hidden="true">!</p>
+      <p>
+        <b>Before you start:</b> This prototype uses published World Bank reference-school
+        estimates from 2021. It does not use measured data from your school.
+        Results are preliminary estimates, not engineering recommendations or current-price quotations.
+      </p>
+    </div>
+
+    <form id="assessmentForm" class="assessment-form">
+      <div class="block__head">
+        <h3 class="block__t">01 / Building profile</h3>
+        <p class="mono">Tell us about the school.</p>
+      </div>
+
+      <div class="assessment-grid">
+        <label class="assessment-field" for="climateZone">
+          <span class="mono">Climate zone</span>
+          <select id="climateZone" name="climate_zone" required>
+            <option value="1">Zone 1</option>
+            <option value="2">Zone 2</option>
+            <option value="3" selected>Zone 3</option>
+            <option value="4">Zone 4</option>
+          </select>
+        </label>
+
+        <label class="assessment-field" for="floorArea">
+          <span class="mono">Floor area (m²)</span>
+          <input id="floorArea" name="floor_area_m2" type="number" min="1" step="any" value="4000" required>
+        </label>
+
+        <label class="assessment-field" for="heatingSystem">
+          <span class="mono">Existing heating system</span>
+          <select id="heatingSystem" name="heating_system" required>
+            <option value="coal" selected>Coal</option>
+            <option value="gas">Gas</option>
+            <option value="district">District heating</option>
+            <option value="electric">Electric</option>
+            <option value="other">Other</option>
+            <option value="unknown">Unknown</option>
+          </select>
+        </label>
+
+        <label class="assessment-field" for="heatingCondition">
+          <span class="mono">Heating system condition</span>
+          <select id="heatingCondition" name="heating_condition" required>
+            <option value="good">Good</option>
+            <option value="fair">Fair</option>
+            <option value="poor">Poor</option>
+            <option value="unknown" selected>Unknown</option>
+          </select>
+        </label>
+
+        <label class="assessment-field" for="electricalCapacity">
+          <span class="mono">Available electrical capacity (kW)</span>
+          <input id="electricalCapacity" name="electrical_capacity_kw" type="number" min="0.01" step="any" placeholder="Optional">
+          <small>Leave blank if unknown.</small>
+        </label>
+
+        <label class="assessment-field" for="budget">
+          <span class="mono">Available retrofit budget (USD, 2021 estimates)</span>
+          <input id="budget" name="budget_usd_2021" type="number" min="0" step="any" value="50000" required>
+        </label>
+      </div>
+
+      <fieldset class="assessment-fuels">
+        <legend class="mono">Available energy sources</legend>
+        <p class="assessment-help">Select the energy sources available to the school.</p>
+        <div class="fuel-options">
+          <label><input type="checkbox" name="available_fuels" value="coal"> Coal</label>
+          <label><input type="checkbox" name="available_fuels" value="natural_gas"> Natural gas</label>
+          <label><input type="checkbox" name="available_fuels" value="electricity"> Electricity</label>
+          <label><input type="checkbox" name="available_fuels" value="other"> Other</label>
+        </div>
+      </fieldset>
+
+      <div class="assessment-submit">
+        <button type="submit" id="assessmentSubmit" class="assessment-button">
+          Evaluate this school <span aria-hidden="true">↗</span>
+        </button>
+        <p class="mono" id="assessmentStatus" role="status" aria-live="polite">
+          Ready when you are.
+        </p>
+      </div>
+    </form>
+
+    <div id="assessmentResults" class="assessment-results" hidden aria-live="polite">
+      <div class="block__head">
+        <h3 class="block__t">02 / Assessment results</h3>
+        <p class="mono">Generated from your submitted profile.</p>
+      </div>
+
+      <div id="assessmentSummary" class="assessment-summary"></div>
+
+      <div class="assessment-result-block">
+        <h3 class="mono">Intervention compatibility</h3>
+        <div id="interventionResults"></div>
+      </div>
+
+      <div class="assessment-result-block">
+        <h3 class="mono">Recommended package scenario</h3>
+        <div id="packageResults"></div>
+      </div>
+
+      <div class="assessment-result-block">
+        <h3 class="mono">Budget optimization</h3>
+        <div id="budgetResults"></div>
+        <p class="assessment-help">
+          Thermal and electrical scenarios are optimized separately.
+          Each scenario uses the full budget independently; they are not one combined allocation.
+        </p>
+      </div>
+
+      <div class="assessment-result-block">
+        <h3 class="mono">Important limitations</h3>
+        <ul id="assessmentLimitations"></ul>
+      </div>
+    </div>
+
+    <div class="assessment-disclaimer mono">
+      KILOWATT TRIAGE · RESEARCH PROTOTYPE · NOT A PROFESSIONAL ENERGY AUDIT
+    </div>
   </div>
 </section>
 

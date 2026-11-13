@@ -183,6 +183,10 @@ def evaluate_retrofit_package(profile):
         "thermal_savings_kwh": thermal_savings,
         "electrical_savings_kwh": led_saving,
         "total_investment_cost_usd_2021": total_investment,
+        "investment_cost_basis": (
+            "Published standard-school reference costs; "
+            "not adjusted for the evaluated school's floor area."
+        ),
         "selected_measures": selected_measures,
         "excluded_options": excluded_options,
         "boiler_assumption": boiler_assumption,
