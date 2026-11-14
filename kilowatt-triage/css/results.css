@@ -51,3 +51,36 @@
 .kt-h { font-family: var(--f-mono); font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; margin: 28px 0 8px; }
 .kt-list { list-style: disc; padding-left: 1.2em; max-width: 70ch; font-size: .92rem; }
 .kt-list li { margin-block: 4px; }
+
+/* ---------- phones: each table row becomes a stacked card ---------- */
+@media (max-width: 760px) {
+  .kt-scroll { overflow-x: visible; }
+
+  .kt-table { min-width: 0; }
+  .kt-table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .kt-table,
+  .kt-table tbody,
+  .kt-table tr,
+  .kt-table td { display: block; width: 100%; }
+
+  .kt-table tr { border: 1px solid var(--line, rgba(128,128,128,.3)); padding: 12px 14px; margin-bottom: 12px; }
+
+  .kt-table td,
+  .kt-table td:first-child,
+  .kt-table td:nth-child(6) { min-width: 0; border: 0; padding: 6px 0; }
+
+  .kt-table td:first-child { font-size: 1.05rem; padding-top: 0; }
+  .kt-num { white-space: normal; }
+
+  .kt-table td::before { display: block; font-family: var(--f-mono); font-size: .66rem; letter-spacing: .08em; text-transform: uppercase; color: var(--mute, #888); margin-bottom: 2px; }
+
+  #interventionResults .kt-table td:nth-child(2)::before { content: "Status"; }
+  #interventionResults .kt-table td:nth-child(3)::before { content: "Energy type"; }
+  #interventionResults .kt-table td:nth-child(4)::before { content: "Estimated saving (kWh/yr)"; }
+  #interventionResults .kt-table td:nth-child(5)::before { content: "Reference cost (2021 USD)"; }
+  #interventionResults .kt-table td:nth-child(6)::before { content: "Notes"; }
+
+  #packageResults .kt-table td:nth-child(2)::before { content: "Energy type"; }
+  #packageResults .kt-table td:nth-child(3)::before { content: "Estimated saving (kWh/yr)"; }
+  #packageResults .kt-table td:nth-child(4)::before { content: "Reference cost (2021 USD)"; }
+}
