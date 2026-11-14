@@ -1,0 +1,63 @@
+/* Kilowatt Triage: assessment form. Reuses the tokens from styles.css. */
+
+.assessment-form { margin-top: 40px; }
+
+.assessment-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px 24px; margin-bottom: 28px; }
+
+.assessment-field { display: grid; gap: 8px; align-content: start; }
+.assessment-field > .mono { color: var(--mute, #888); }
+.assessment-field small { font-family: var(--f-mono); font-size: .68rem; letter-spacing: .04em; color: var(--mute, #888); }
+
+.assessment-field input,
+.assessment-field select {
+  width: 100%;
+  font: inherit;
+  color: var(--fg, #ece8de);
+  background: var(--panel, #232321);
+  border: 1px solid var(--line, rgba(236,232,222,.3));
+  border-radius: 0;
+  padding: 12px 14px;
+  min-height: 48px;
+  transition: border-color .2s;
+}
+
+.assessment-field input::placeholder { color: var(--mute, #888); }
+.assessment-field input:hover,
+.assessment-field select:hover { border-color: var(--fg, #ece8de); }
+.assessment-field input:focus-visible,
+.assessment-field select:focus-visible { outline: 2px solid var(--accent, #ff4a1c); outline-offset: 2px; border-color: var(--accent, #ff4a1c); }
+
+.assessment-fuels { border: 1px solid var(--line, rgba(236,232,222,.3)); padding: 16px 18px 18px; margin: 0 0 28px; min-width: 0; }
+.assessment-fuels legend { padding: 0 8px; color: var(--mute, #888); }
+.assessment-fuels .assessment-help { color: var(--mute, #888); font-size: .88rem; margin-bottom: 12px; }
+
+.fuel-options { display: flex; flex-wrap: wrap; gap: 10px 14px; }
+.fuel-options label { display: inline-flex; align-items: center; gap: 10px; padding: 10px 14px; min-height: 44px; border: 1px solid var(--line, rgba(236,232,222,.3)); cursor: pointer; transition: border-color .2s; }
+.fuel-options label:hover { border-color: var(--fg, #ece8de); }
+.fuel-options input[type="checkbox"] { width: 20px; height: 20px; margin: 0; accent-color: var(--accent, #ff4a1c); cursor: pointer; }
+
+.assessment-submit { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 24px; }
+
+.assessment-button {
+  font-family: var(--f-mono);
+  font-size: .85rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--ink, #0d0d0c);
+  background: var(--accent, #ff4a1c);
+  border: 1px solid var(--accent, #ff4a1c);
+  padding: 14px 26px;
+  min-height: 48px;
+  cursor: pointer;
+  transition: background .2s, color .2s;
+}
+.assessment-button:hover:not(:disabled) { background: var(--fg, #ece8de); border-color: var(--fg, #ece8de); }
+.assessment-button:focus-visible { outline: 2px solid var(--fg, #ece8de); outline-offset: 3px; }
+.assessment-button:disabled { opacity: .6; cursor: progress; }
+
+#assessmentStatus { color: var(--mute, #888); }
+
+@media (max-width: 560px) {
+  .assessment-submit { flex-direction: column; align-items: stretch; }
+  .assessment-button { width: 100%; }
+}
