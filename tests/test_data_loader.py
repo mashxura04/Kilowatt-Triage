@@ -1,10 +1,10 @@
-
 import unittest
 from copy import deepcopy
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
 from src.data_loader import (
+    DATA_FILE,
     load_data,
     load_source_register,
     validate_data,
@@ -59,6 +59,49 @@ class TestDataLoader(unittest.TestCase):
 
         with self.assertRaises(ValueError):
             validate_data(rows)
+
+    def test_non_finite_required_values_are_rejected(self):
+        for column in (
+            "reported_energy_saving_kwh",
+            "investment_cost_usd",
+        ):
+            for bad in (float("nan"), float("inf"), float("-inf")):
+                with self.subTest(column=column, value=bad):
+                    rows = deepcopy(self.rows)
+                    rows[0][column] = bad
+
+                    with self.assertRaises(ValueError):
+                        validate_data(rows)
+
+    def test_non_finite_optional_values_are_rejected(self):
+        for column in (
+            "fuel_saved_tonnes",
+            "fuel_saved_m3",
+            "additional_electricity_kwh",
+        ):
+            for bad in (float("nan"), float("inf"), float("-inf")):
+                with self.subTest(column=column, value=bad):
+                    rows = deepcopy(self.rows)
+                    rows[0][column] = bad
+
+                    with self.assertRaises(ValueError):
+                        validate_data(rows)
+
+    def test_csv_with_non_finite_text_is_rejected_on_load(self):
+        original = DATA_FILE.read_text(encoding="utf-8-sig")
+        lines = original.splitlines()
+
+        # Row 1 (zone 1 insulation): replace the saving with "nan".
+        fields = lines[1].split(",")
+        fields[2] = "nan"
+        lines[1] = ",".join(fields)
+
+        with TemporaryDirectory() as directory:
+            path = Path(directory) / "retrofit_data.csv"
+            path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+            with self.assertRaises(ValueError):
+                load_data(path)
 
     def test_zone_returns_six_interventions(self):
         for zone in range(1, 5):

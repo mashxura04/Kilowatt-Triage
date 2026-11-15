@@ -1,5 +1,5 @@
-
 import csv
+import math
 from pathlib import Path
 
 
@@ -44,6 +44,11 @@ VALID_BASES = {
     "electrical",
     "fuel_switch_unresolved",
 }
+
+REQUIRED_NUMERIC_COLUMNS = (
+    "reported_energy_saving_kwh",
+    "investment_cost_usd",
+)
 
 OPTIONAL_NUMERIC_COLUMNS = {
     "fuel_saved_tonnes",
@@ -113,6 +118,16 @@ def validate_data(rows):
             raise ValueError(f"Duplicate intervention record: {key}")
 
         seen.add(key)
+
+        for column in REQUIRED_NUMERIC_COLUMNS:
+            if not math.isfinite(row[column]):
+                raise ValueError(f"{column} must be a finite number.")
+
+        for column in OPTIONAL_NUMERIC_COLUMNS:
+            value = row[column]
+
+            if value is not None and not math.isfinite(value):
+                raise ValueError(f"{column} must be a finite number.")
 
         if row["reported_saving_basis"] not in VALID_BASES:
             raise ValueError(

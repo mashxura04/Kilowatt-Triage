@@ -816,7 +816,7 @@
       }
     }
 
-    function scenarioCard(title, scenario) {
+    function scenarioCard(title, scenario, emptyNote) {
       const card = make('div', 'kt-card');
       card.appendChild(make('h4', null, title));
 
@@ -837,7 +837,11 @@
 
       if (measures.length === 0) {
         card.appendChild(
-          make('p', 'kt-note', 'No measure fits within this budget.')
+          make(
+            'p',
+            'kt-note',
+            emptyNote || 'No measure fits within this budget.'
+          )
         );
       } else {
         const ul = make('ul');
@@ -874,7 +878,11 @@
 
       if (budgetResult.thermal_optimization) {
         cards.appendChild(
-          scenarioCard('Heating scenario (thermal)', budgetResult.thermal_optimization)
+          scenarioCard(
+            'Heating scenario (thermal)',
+            budgetResult.thermal_optimization,
+            'No heating package fits within this budget. Boiler savings are estimated only after insulation, so a boiler is not offered on its own.'
+          )
         );
       }
 

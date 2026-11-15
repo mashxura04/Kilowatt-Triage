@@ -1,7 +1,7 @@
 # Kilowatt Triage — project website
 
 Team 7345 · NYAS Junior Academy · research and prototype stage.
-A static site: plain HTML, CSS and JavaScript. No build step, no dependencies, no environment variables.
+A static site: plain HTML, CSS and JavaScript. No build step, no dependencies, no environment variables. The assessment form needs the API in the repository root (see below).
 
 ## Folder structure
 
@@ -28,21 +28,11 @@ python3 -m http.server 8000
 
 ## Deploy on Vercel
 
-**Option A — dashboard (easiest)**
-1. Put this folder in a GitHub repository (the folder's contents at the repo root).
-2. On vercel.com choose **Add New → Project** and import the repository.
-3. Framework Preset: **Other**. Build Command: leave empty. Output Directory: leave empty (the root is served).
-4. Click **Deploy**.
+This folder is only the static front end. The assessment form calls `/api/evaluate`, which lives in `../api/evaluate.py` and imports `../src` and `../data`.
 
-**Option B — CLI**
-```bash
-npm i -g vercel
-cd kilowatt-triage
-vercel          # first deploy (preview)
-vercel --prod   # production
-```
+Deploy the **repository root** (leave Root Directory blank). The root `vercel.json` sets `outputDirectory` to `kilowatt-triage`, and Vercel detects `api/evaluate.py` automatically. If this folder is deployed on its own, the page loads but the form cannot reach the API.
 
-No environment variables or extra configuration are needed.
+No build command or environment variables are required.
 
 ## Editing the data
 
