@@ -19,6 +19,8 @@ The project uses a representative public-school model based on the World Bank's 
 - Evaluates a sequential retrofit package consisting of insulation, a compatible conventional boiler upgrade where applicable, and LED lighting.
 - Identifies fuel-switch options whose net energy savings cannot yet be calculated reliably.
 - Reports historical reference investment costs.
+- Selects the savings-maximizing package within a stated budget from a small, fixed set of candidate packages (thermal and electrical scenarios are optimized separately).
+- Serves assessments through a JSON API (`api/evaluate.py`) and a static project website with an assessment form (`kilowatt-triage/`).
 
 ## Methodological Approach
 
@@ -46,6 +48,12 @@ Boiler savings are treated as post-insulation savings based on numerical consist
 
 Fuel-switch options are excluded from calculated package savings until their complete energy balances can be established.
 
+### Budget Optimization
+
+`src/budget_optimizer.py` selects, for the entered budget, the package with the largest estimated saving. Thermal and electrical scenarios are optimized separately and each uses the full budget independently; they are not one combined allocation.
+
+The candidate set is deliberately small: no thermal measure, insulation, or insulation plus the compatible conventional boiler upgrade (thermal); and LED lighting (electrical). A boiler is never offered on its own, because boiler savings are only estimated after insulation. Fuel-switch options are excluded. Costs are the unscaled 2021 reference-school costs, so a small school's budget is compared against full reference-school prices.
+
 ### Investment Costs
 
 Investment costs are historical 2021 USD reference values from the World Bank study.
@@ -54,15 +62,19 @@ They are not current supplier quotations or verified school-specific project bud
 
 ## Project Structure
 
-```text
-kilowatt-triage/
+```
+Kilowatt-Triage/
+├── api/
+│   └── evaluate.py            Vercel Python function: POST /api/evaluate (GET = health check)
 ├── data/
 │   ├── retrofit_data.csv
 │   └── source_register.csv
+├── kilowatt-triage/           static website (HTML/CSS/JS) incl. the assessment form
 ├── research/
 │   └── validation_notes.md
 ├── src/
 │   ├── baseline.py
+│   ├── budget_optimizer.py
 │   ├── compatibility.py
 │   ├── data_loader.py
 │   ├── evaluation.py
@@ -70,17 +82,9 @@ kilowatt-triage/
 │   ├── package_evaluation.py
 │   ├── scaling.py
 │   └── school_profile.py
-├── tests/
-│   ├── test_baseline.py
-│   ├── test_compatibility.py
-│   ├── test_data_loader.py
-│   ├── test_evaluation.py
-│   ├── test_evaluation_scaling.py
-│   ├── test_model.py
-│   ├── test_package_evaluation.py
-│   ├── test_scaling.py
-│   └── test_school_profile.py
+├── tests/                     unit tests incl. API handler and budget optimizer
 ├── check_boiler_percentages.py
+├── vercel.json                serves kilowatt-triage/ as the site; api/ as the function
 ├── README.md
 └── .gitignore
 ```
@@ -104,6 +108,12 @@ python -m src.main
 
 Follow the prompts to enter the school's characteristics and generate an evaluation report.
 
+## Website and API
+
+The deployed site is the repository root on Vercel: the root `vercel.json` sets `outputDirectory` to `kilowatt-triage`, and `api/evaluate.py` is detected as a Python function. The Vercel project's Root Directory must therefore be the repository root (not `kilowatt-triage/`), otherwise `/api/evaluate` will not exist and the form will fail.
+
+Opening `/api/evaluate` in a browser (GET) returns a small health check, for example `{"success": true, "status": "alive", "imports_ok": true}`.
+
 ## Running the Tests
 
 Run the complete automated test suite:
@@ -112,7 +122,7 @@ Run the complete automated test suite:
 python -m unittest discover -s tests -v
 ```
 
-The latest recorded test run completed with **161 passing tests and no failures**.
+The latest recorded test run (Python 3.12.3) completed with **203 passing tests and no failures**. Earlier versions of this README reported 161.
 
 ## Data Source
 
@@ -133,7 +143,10 @@ Reported values should be distinguished from school-specific estimates generated
 - Electrical conversion options require further technical assessment, even when electricity is available.
 - Investment costs are historical reference values, not current quotations.
 - Maintenance costs, equipment lifetimes, current energy tariffs, financing, and verified emissions factors are not yet incorporated.
-- The prototype does not yet perform budget-constrained optimization or sensitivity analysis.
+- The budget optimizer chooses from a small fixed set of candidate packages using unscaled reference-school costs; it is not a general optimizer.
+- The heating-system condition is validated and displayed but does not currently change any estimate; no supported adjustment factor has been identified.
+- The prototype does not yet perform sensitivity analysis.
+- Estimates have not been validated against actual school energy bills or measurements.
 
 ## Development Status
 
