@@ -173,8 +173,8 @@
         <li class="tension" data-reveal style="--d:.08s">
           <p class="tension__n mono">T4 · Interaction</p>
           <p class="tension__big">Σ<span class="neq">≠</span></p>
-          <p>Measures don’t simply add up. The report evaluates boiler savings after insulation in the relevant scenario, so the two can’t be stacked as independent standalone figures.</p>
-          <p class="prov prov--pub mono">Published · World Bank 2021</p>
+          <p>Measures aren’t independent. The published boiler savings match the heating demand left after insulation (our check), so they only apply as a sequence: insulation first, then the boiler.</p>
+          <p class="prov prov--calc mono">Our arithmetic · Table 41 % × (Table 37 heating − Table 42 insulation)</p>
         </li>
       </ul>
     </div>
@@ -287,7 +287,7 @@
 
       <div class="notadd" data-reveal>
         <p class="notadd__sym" aria-hidden="true">Σ</p>
-        <p><b>This is not a shopping list.</b> The savings overlap, they are not all the same kind of energy, and they come from a model school. Insulation and boiler savings can’t be added together; the report evaluates boilers after insulation in the relevant scenario. LED lighting saves electricity; insulation and boiler measures mainly affect thermal energy. Electric boilers and heat pumps add electricity demand, so their reported savings are not verified net financial or environmental benefits. Costs are 2021 estimates, not current quotations.</p>
+        <p><b>This is not a shopping list.</b> The savings overlap, they are not all the same kind of energy, and they come from a model school. Boiler savings are not independent of insulation: the published figures match the heating demand left after insulation (our check; the report does not describe the sequence in words), so they apply as a sequence, insulation first. LED lighting saves electricity; insulation and boiler measures mainly affect thermal energy. Electric boilers and heat pumps add electricity demand, so their reported savings are not verified net financial or environmental benefits. Costs are 2021 estimates, not current quotations.</p>
       </div>
 
       <div class="sortbar mono" role="group" aria-label="Order the measures">
@@ -308,7 +308,7 @@
 
       <ol class="ivs" id="ivs" data-inview>
         <li class="iv" data-order="1" data-save="392482" data-cost="33043">
-          <div class="iv__id"><span class="iv__n mono">M1</span><h4>Insulation</h4><p class="tagline mono tagline--th">Thermal</p><p class="iv__note">Boiler measures are assessed after insulation. Don’t stack the two.</p></div>
+          <div class="iv__id"><span class="iv__n mono">M1</span><h4>Insulation</h4><p class="tagline mono tagline--th">Thermal</p><p class="iv__note">Boiler figures match the demand left after insulation (our check), so they apply as a sequence.</p></div>
           <div class="iv__c"><span class="iv__lab mono">Savings, kWh/yr</span><span class="bar"><i class="bar__s"></i></span><b class="iv__v mono">392,482</b></div>
           <div class="iv__c"><span class="iv__lab mono">Investment, US$</span><span class="bar"><i class="bar__c"></i></span><b class="iv__v mono">$33,043</b></div>
         </li>
@@ -318,7 +318,7 @@
           <div class="iv__c"><span class="iv__lab mono">Investment, US$</span><span class="bar"><i class="bar__c"></i></span><b class="iv__v mono">$13,500</b></div>
         </li>
         <li class="iv" data-order="3" data-save="188924" data-cost="13500">
-          <div class="iv__id"><span class="iv__n mono">M3</span><h4>Efficient coal boiler</h4><p class="tagline mono tagline--th">Thermal</p><p class="iv__note">Boiler savings are evaluated after insulation in the relevant scenario.</p></div>
+          <div class="iv__id"><span class="iv__n mono">M3</span><h4>Efficient coal boiler</h4><p class="tagline mono tagline--th">Thermal</p><p class="iv__note">Equals 37.5% of heating demand after insulation (our check).</p></div>
           <div class="iv__c"><span class="iv__lab mono">Savings, kWh/yr</span><span class="bar"><i class="bar__s"></i></span><b class="iv__v mono">188,924</b></div>
           <div class="iv__c"><span class="iv__lab mono">Investment, US$</span><span class="bar"><i class="bar__c"></i></span><b class="iv__v mono">$13,500</b></div>
         </li>
@@ -356,7 +356,7 @@
         <ol>
           <li>The World Bank models a reference public school: 4,000 m², two floors above ground and a basement.</li>
           <li>For that model school it publishes heating intensity, saving potential and investment estimates (Tables 36, 42, 47).</li>
-          <li>Insulation and boiler measures interact. The report evaluates boilers after insulation in the relevant scenario.</li>
+          <li>Insulation and boiler measures interact. The report publishes boiler savings as fixed percentages of heating demand (Table 41); the published figures match demand after insulation (our check).</li>
           <li>LED lighting saves electricity; insulation and boilers mainly affect thermal energy.</li>
         </ol>
       </div>
