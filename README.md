@@ -64,6 +64,9 @@ They are not current supplier quotations or verified school-specific project bud
 
 ```
 Kilowatt-Triage/
+├── .github/
+│   └── workflows/
+│       └── tests.yml          runs the unit tests on Python 3.9 to 3.12
 ├── api/
 │   └── evaluate.py            Vercel Python function: POST /api/evaluate (GET = health check)
 ├── data/
@@ -71,7 +74,8 @@ Kilowatt-Triage/
 │   └── source_register.csv
 ├── kilowatt-triage/           static website (HTML/CSS/JS) incl. the assessment form
 ├── research/
-│   └── validation_notes.md
+│   ├── validation_notes.md
+│   └── validation_plan.md
 ├── src/
 │   ├── baseline.py
 │   ├── budget_optimizer.py
@@ -91,7 +95,7 @@ Kilowatt-Triage/
 
 ## Requirements
 
-- Python 3.9 or newer.
+- Python 3.9 or newer. The code uses no syntax or libraries newer than 3.9 (static check). The test suite has been run locally on Python 3.12; `.github/workflows/tests.yml` runs it on Python 3.9 to 3.12 for every pull request.
 - No third-party Python packages are currently required.
 
 The prototype uses Python's standard library.
@@ -146,7 +150,7 @@ Reported values should be distinguished from school-specific estimates generated
 - The budget optimizer chooses from a small fixed set of candidate packages using unscaled reference-school costs; it is not a general optimizer.
 - The heating-system condition is validated and displayed but does not currently change any estimate; no supported adjustment factor has been identified.
 - The prototype does not yet perform sensitivity analysis.
-- Estimates have not been validated against actual school energy bills or measurements.
+- Estimates have not been validated against actual school energy bills or measurements. A plan for doing so is in `research/validation_plan.md`.
 
 ## Development Status
 

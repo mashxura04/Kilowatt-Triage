@@ -13,6 +13,7 @@
   --acid: #d8ff3e;      /* used sparingly: fuel-switch warnings only */
   --pad: clamp(18px, 3.2vw, 48px);
   --cut: clamp(22px, 4vw, 64px);
+
   --nav-h: 56px;
   --f-sans: "Archivo", "Helvetica Neue", Arial, system-ui, sans-serif;
   --f-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
@@ -411,4 +412,19 @@ svg { display: block; }
   *, *::before, *::after { animation: none !important; transition-duration: .01ms !important; transition-delay: 0s !important; }
   .js [data-reveal] { opacity: 1; transform: none; }
   .web .w-path { stroke-dashoffset: 0; }
+}
+/* ------------------------------------------------------ small-phone fixes */
+@media (max-width: 920px) {
+  .nav__btn { min-height: 44px; }
+}
+@media (max-width: 520px) {
+  /* The "Make the" kicker is 13% of the headline size, which is only about 7px on phones. */
+  .hero__title .l1 { font-size: 11px; }
+  /* Keep the hanging triage tag fully on screen (it was cut off by 12-24px). */
+  .tagwrap { right: 76px; }
+  /* Safety net for slow or blocked web fonts: the wider fallback font must not push
+     text off the screen. These only act when a line cannot fit; with the real font
+     (narrower), nothing changes. */
+  .hero__title .l2 { white-space: normal; }
+  .sec-title, .team__names b { overflow-wrap: break-word; }
 }
