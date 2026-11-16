@@ -252,11 +252,11 @@
     },
     {
       name: 'Evaluate',
-      text: 'Weigh each option against what it could save, what it costs, whether it is feasible, and how it fits with the others.',
+      text: 'Weigh each option against what it could save, what it costs, whether it fits the school’s heating system and fuels, and how it combines with the others.',
       list: [
         'Potential energy savings',
         'Initial investment cost',
-        'Technical feasibility',
+        'Heating-system and fuel compatibility',
         'Compatibility between interventions'
       ],
       x: 400,
@@ -527,7 +527,14 @@
     const now = $$('.step.is-now').length;
     const next = $$('.step.is-next').length;
 
-    sum.textContent = `${done} complete · ${now} in progress · ${next} planned`;
+    sum.textContent = [
+      [done, 'complete'],
+      [now, 'in progress'],
+      [next, 'planned']
+    ]
+      .filter(([count]) => count > 0)
+      .map(([count, label]) => `${count} ${label}`)
+      .join(' · ');
   }
 
   /* ---------- school assessment: Python API ---------- */
