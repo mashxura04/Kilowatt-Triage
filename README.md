@@ -147,7 +147,7 @@ Reported values should be distinguished from school-specific estimates generated
 - Electrical conversion options require further technical assessment, even when electricity is available.
 - Investment costs are historical reference values, not current quotations.
 - Maintenance costs, equipment lifetimes, current energy tariffs, financing, and verified emissions factors are not yet incorporated.
-- The budget optimizer chooses from a small fixed set of candidate packages using unscaled reference-school costs; it is not a general optimizer.
+- The budget optimizer chooses from a small fixed set of candidate packages using unscaled reference-school costs; it is not a general optimizer. Because savings are scaled by floor area but costs are not, its budget results are probably too optimistic for schools larger than 4,000 m² and too pessimistic for smaller ones; the website says so for any school that is not 4,000 m².
 - The heating-system condition is validated and displayed but does not currently change any estimate; no supported adjustment factor has been identified.
 - The prototype does not yet perform sensitivity analysis.
 - Estimates have not been validated against actual school energy bills or measurements. A plan for doing so is in `research/validation_plan.md`.

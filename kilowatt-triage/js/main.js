@@ -872,7 +872,7 @@
       return card;
     }
 
-    function renderBudget(target, budgetResult) {
+    function renderBudget(target, budgetResult, floorArea) {
       if (!target) return;
       target.textContent = '';
 
@@ -903,6 +903,23 @@
 
       if (budgetResult.cost_basis) {
         target.appendChild(make('p', 'kt-note', budgetResult.cost_basis));
+      }
+
+      const REFERENCE_AREA = 4000;
+
+      if (Number.isFinite(floorArea) && floorArea !== REFERENCE_AREA) {
+        const larger = floorArea > REFERENCE_AREA;
+
+        target.appendChild(
+          make(
+            'p',
+            'kt-note',
+            `Costs are for the ${fmt(REFERENCE_AREA)} m² reference school and are not scaled to this school’s ${fmt(floorArea)} m². ` +
+            (larger
+              ? 'Larger buildings typically cost more to retrofit, so this budget result is probably too optimistic.'
+              : 'Smaller buildings typically cost less to retrofit, so a package may fit your budget even where this panel shows none.')
+          )
+        );
       }
 
       if (Array.isArray(budgetResult.limitations) && budgetResult.limitations.length) {
@@ -998,7 +1015,7 @@
         renderSummary($('#assessmentSummary'), profile, budget);
         renderMeasures($('#interventionResults'), data.evaluation?.interventions);
         renderPackage($('#packageResults'), data.package);
-        renderBudget($('#budgetResults'), data.budget_optimization);
+        renderBudget($('#budgetResults'), data.budget_optimization, profile.floor_area_m2);
         renderLimitations($('#assessmentLimitations'), data.package?.limitations);
 
         if (assessmentResults) {
